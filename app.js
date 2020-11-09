@@ -3,6 +3,9 @@ const multer = require('multer');
 const ejs = require('ejs');
 const path = require('path');
 
+const indexRoute = require('./routes/indexRoute');
+const userRoute = require('./routes/userRoute')
+
 // Set The Storage Engine
 // const storage = multer.diskStorage({
 //   destination: './public/uploads/',
@@ -45,32 +48,36 @@ app.set('view engine', 'ejs');
 // Public Folder
 app.use(express.static('./public'));
 
-app.get('/', (req, res) => res.render('index'));
 
 //Upload Route
-app.post('/upload', (req, res) => {
-  upload(req, res, (err) => {
-    if(err){
-      res.render('index', {
-        msg: err
-      });
-    } else {
-      //console.log(req.file);
-      //res.send('test')
-      if(req.file == undefined){
-        res.render('index', {
-          msg: 'Error: No File Selected!'
-        });
-      } else {
-        res.render('index', {
-          msg: 'File Uploaded!',
-          file: `uploads/${req.file.filename}`
-        });
-      }
-    }
-  });
-});
+// app.post('/upload', (req, res) => {
+//   upload(req, res, (err) => {
+//     if(err){
+//       res.render('index', {
+//         msg: err
+//       });
+//     } else {
+//       //console.log(req.file);
+//       //res.send('test')
+//       if(req.file == undefined){
+//         res.render('index', {
+//           msg: 'Error: No File Selected!'
+//         });
+//       } else {
+//         res.render('index', {
+//           msg: 'File Uploaded!',
+//           file: `uploads/${req.file.filename}`
+//         });
+//       }
+//     }
+//   });
+// });
 
+// Routes
+app.use('/', indexRoute);
+app.use('/', userRoute);
+
+
+// Server
 const port = 3000;
-
 app.listen(port, () => console.log(`Server started on port ${port}`));
