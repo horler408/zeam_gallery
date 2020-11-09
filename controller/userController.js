@@ -12,11 +12,11 @@ exports.upload = (req, res) => {
         //res.send('test')
         if(req.file == undefined){
           res.render('index', {
-            msg: 'Error: No File Selected!'
+            msg: 'No File Selected!'
           });
         } else {
-          res.render('index', {
-            msg: 'File Uploaded!',
+          res.render('gallery', {
+            msg: 'File Uploaded successfully',
             file: `uploads/${req.file.filename}`
           });
         }
