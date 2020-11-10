@@ -3,8 +3,7 @@
 <div class="wrapper">
     <div><%= typeof msg != 'undefined' ? msg : ''  %></div>
     <h1>Gallery Page</h1>
-    <div><%= typeof file != 'undefined' ? file : ''  %></div>
-    <img src="" alt="">
+    <img src="<%= typeof files != 'undefined' ? files : ''  %>" alt="Uploaded">
 </div>
 
 <%- include('partials/footer'); -%>
