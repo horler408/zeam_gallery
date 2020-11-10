@@ -1,11 +1,15 @@
 const express = require('express');
 const path = require('path');
 
+const dbConnect = require('./config/db')
+
 const indexRoute = require('./routes/indexRoute');
 const userRoute = require('./routes/userRoute')
 
 // Init app
 const app = express();
+
+dbConnect();
 
 // EJS
 app.set('view engine', 'ejs');

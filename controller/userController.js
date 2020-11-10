@@ -17,10 +17,52 @@ exports.files = (req, res) => {
 exports.file = (req, res) => {
   User.findById({id: req.params.id})
   .then(file => {
-    res.json(file)
+    if(!file || file.length == 0) {
+      return res.status(404).json({
+        message: 'File do not exists'
+      })
+    }
+    return res.json(file)
   })
   .catch(err => {
     console.log(err);
+  })
+}
+
+// Get Images
+exports.images = (req, res) => {
+  User.find().exec()
+  .then(images => {
+    if(!images || images.length < 1) {
+      return res.render('index', {msg: 'No file exists'})
+    } else {
+      files.map(file => {
+        if(file.contentType === 'image/jpeg' || file.contentType === 'image/png'){
+          file.isImage = true
+        }else {
+          file.isImage = false
+        }
+      })
+      res.render('gallery', {images})
+    }
+  })
+  .catch(err => {
+    res.redirect('/')
+  })
+}
+
+// Get Image
+exports.getImage = (req, res) => {
+  User.findOne({id: req.params.id})
+  .then(user => {
+    if(!user || user.length == 0) {
+      return res.render('index', 
+      {msg: 'The select image do not exists'})
+    }
+    res.render('gallery')
+  })
+  .catch(err => {
+    res.redirect('/')
   })
 }
 
@@ -33,16 +75,26 @@ exports.image = (req, res) => {
       } else {
         //console.log(req.file);
         //res.send('test')
-        if(req.file == undefined){
-          res.render('index', {
-            msg: 'No File Selected!'
-          });
-        } else {
-          res.render('gallery', {
-            msg: 'File Uploaded successfully',
-            files: `uploads/${req.file.filename}`
-          });
-        }
+        const image = new User({
+          imageUrl: req.body.myImage
+        })
+
+        image.save()
+        .then(files => {
+          if(files == undefined){
+            res.render('index', {
+              msg: 'No File Selected!'
+            });
+          } else {
+            res.render('gallery', {
+              msg: 'File Uploaded successfully',
+              files: `uploads/${req.file.filename}`
+            });
+          }
+        })
+        .catch(err => {
+          res.redirect('/')
+        })
       }
     });
   }

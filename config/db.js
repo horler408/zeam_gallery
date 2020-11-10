@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const dbConnect = () => {
-  mongoose.connect("mongodb://localhost:27017/testdb", {
+  mongoose.connect("mongodb://localhost:27017/multer-upload", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   });
@@ -16,4 +16,4 @@ const dbConnect = () => {
   });
 }
 
-module.export = dbConnect;
+module.exports = dbConnect;
