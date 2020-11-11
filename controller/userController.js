@@ -32,9 +32,9 @@ exports.file = (req, res) => {
 // Get Images
 exports.images = (req, res) => {
   User.find().exec()
-  .then(images => {
-    if(!images || images.length < 1) {
-      return res.render('index', {msg: 'No file exists'})
+  .then(files => {
+    if(!files || files.length < 1) {
+      return res.render('index', {msg: 'No images avilable in the gallery!'})
     } else {
       files.map(file => {
         if(file.contentType === 'image/jpeg' || file.contentType === 'image/png'){
@@ -43,7 +43,7 @@ exports.images = (req, res) => {
           file.isImage = false
         }
       })
-      res.render('gallery', {images})
+      res.render('gallery', {files})
     }
   })
   .catch(err => {
@@ -86,7 +86,7 @@ exports.image = (req, res) => {
               msg: 'No File Selected!'
             });
           } else {
-            res.render('gallery', {
+            res.render('index', {
               msg: 'File Uploaded successfully',
               files: `uploads/${req.file.filename}`
             });

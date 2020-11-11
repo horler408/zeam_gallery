@@ -19,7 +19,7 @@ app.use(express.static('./public'));
 
 // Routes
 app.use('/', indexRoute);
-app.use('/', userRoute);
+app.use('/api', userRoute);
 
 
 // Server
