@@ -6,7 +6,7 @@
     <img src="<%= typeof files != 'undefined' ? files : ''  %>" alt="Uploaded">
 
     <hr>
-        <% if(files){ %>
+        <% if(typeof files =! 'undefined'){ %>
           <% files.forEach(function(file) { %>
             <div class="card card-body mb-3">
               <% if(file.isImage) { %>

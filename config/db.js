@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const dbConnect = () => {
-  mongoose.connect("mongodb://localhost:27017/multer-upload", {
+  mongoose.connect("mongodb://localhost:27017/zeam-upload", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   });

@@ -1,6 +1,6 @@
 
 const upload = require('./../middlewares/multer')
-const User = require('./../model/user')
+const Image = require('./../model/user')
 
 // Get all files
 exports.files = (req, res) => {
@@ -35,16 +35,8 @@ exports.images = (req, res) => {
   .then(files => {
     if(!files || files.length < 1) {
       return res.render('index', {msg: 'No images avilable in the gallery!'})
-    } else {
-      files.map(file => {
-        if(file.contentType === 'image/jpeg' || file.contentType === 'image/png'){
-          file.isImage = true
-        }else {
-          file.isImage = false
-        }
-      })
-      res.render('gallery', {files})
-    }
+    } 
+      res.render('gallery', {files: files})
   })
   .catch(err => {
     res.redirect('/')
@@ -73,10 +65,11 @@ exports.image = (req, res) => {
           msg: err
         });
       } else {
+        const url = req.protocol + "://" + req.get("host");
         //console.log(req.file);
         //res.send('test')
-        const image = new User({
-          imageUrl: req.body.myImage
+        const image = new Image({
+          imageUrl: url + "/uploads/" + req.file.filename
         })
 
         image.save()
@@ -88,7 +81,7 @@ exports.image = (req, res) => {
           } else {
             res.render('index', {
               msg: 'File Uploaded successfully',
-              files: `uploads/${req.file.filename}`
+              //files: `uploads/${req.file.filename}`
             });
           }
         })
