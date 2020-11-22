@@ -1,1 +1,1 @@
-# zeam_gallery
+A mini e-commerce project for a fashion store
