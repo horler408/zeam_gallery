@@ -68,8 +68,9 @@ exports.image = (req, res) => {
         const url = req.protocol + "://" + req.get("host");
         //console.log(req.file);
         //res.send('test')
+        const filePath = url + "/uploads/" + req.file.filename;
         const image = new Image({
-          imageUrl: url + "/uploads/" + req.file.filename
+          imageUrl: filePath
         })
 
         image.save()
