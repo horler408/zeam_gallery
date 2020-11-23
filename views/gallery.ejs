@@ -1,28 +1,29 @@
-<%- include('partials/header'); -%>
+  <%- include('partials/header'); -%>
+    <div class="gallery_container">
+      <%= typeof msg != 'undefined' ? msg : ''  %>
+      <%- include("partials/messages"); -%>
+      <div class="select">
+        <select name="category" id="select">
+          <option value="">Select by category</option>
+          <option value="">Fabrics</option>
+          <option value="">Shoes</option>
+          <option value="">Bags</option>
+          <option value="">Ornaments</option>
+        </select>
+      </div>   
+        <div class="gallery_contents">
+          <% if(typeof products != 'undefined'){ %> 
+            <% products.forEach(function(product) { %>
+          <div class="gallery_items">
+              <img src="<%= product.imageUrl %>" alt="<%= product.title %>" loading="lazy" />
+              <div class="title"><%= product.title.toUpperCase() %></div>
+              <div class="price">#<%= product.price %></div>
+              <p class="item_order"><a href="/api/product/<%= product.id  %>">Click to order</a></p>
+          </div>
+          <% }) %> <% } else { %>
+          <p>No files to show</p>
+          <% } %>
+        </div>
+    </div>
 
-<div class="wrapper">
-    <div><%= typeof msg != 'undefined' ? msg : ''  %></div>
-    <h1>Gallery Page</h1>
-    <img src="<%= typeof files != 'undefined' ? files : ''  %>" alt="Uploaded">
-
-    <hr>
-        <% if(typeof files =! 'undefined'){ %>
-          <% files.forEach(function(file) { %>
-            <div class="card card-body mb-3">
-              <% if(file.isImage) { %>
-                <img src="image/<%= file.filename %>" alt="">
-                <% } else { %>
-                  <%= file.filename %>
-                    <% } %>
-                      <form method="POST" action="/files/<%= file._id %>?_method=DELETE">
-                        <button class="btn btn-danger btn-block mt-4">Delete</button>
-                      </form>
-            </div>
-            <% }) %>
-              <% } else { %>
-                <p>No images to show</p>
-                <% } %>
-
-</div>
-
-<%- include('partials/footer'); -%>
+    <%- include('partials/footer'); -%>

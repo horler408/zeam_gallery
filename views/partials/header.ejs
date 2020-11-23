@@ -1,0 +1,92 @@
+
+<div class="nav">
+    <img src="/assets/logo.png" alt="Site Logo">
+    
+    <div class="menu">
+        <div class="menu__item active"><a href="/">Home</a></div>
+        <div class="menu__item"><a href="/api/product">Gallery</a></div>
+        <div class="menu__item"><a href="/home">Dashboard</a></div>
+        <div class="menu__item" id="register-btn"><a href="#">Register</a></div>
+        <div class="menu__item" id="login-btn"><a href="#">Login</a></div>
+    </div>
+    <div class="sidebar__toggle">
+        <button class="head__sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+</div>
+
+<aside class="aside">
+    <button class="close-btn">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="menu__items">
+        <div class="menu__list active"><a href="/">Home</a></div>
+        <div class="menu__list"><a href="/api/product">Gallery</a></div>
+        <div class="menu__list"><a href="/home">Dashboard</a></div>
+        <div class="menu__list" id="register-btn"><a href="/api/auth/register">Register</a></div>
+        <div class="menu__list" id="login-btn"><a href="/api/auth/login">Login</a></div>
+    </div>
+    <hr>
+    <div class="form__buttons">
+      <button type="button" class="signup active">Get Started</button>
+    </div>
+  </aside>
+
+<div class="popup-overlay"></div>
+<div class="popup">
+    <div class="popup-close" id="close-btn">&times;</div>
+    <form action="/api/auth/register" method="POST">
+        <div class="avatar">
+            <img src="/assets/register.png" alt="Login Avatar">
+        </div>
+        <h1>User Registration</h1>
+        <div class="name">
+            <label for="name">Full Name<span class="red_info"> *</span></label>
+            <input type="text" id="name" name="name" required
+            value="<%= typeof name != 'undefined' ? name : '' %>"
+            >
+        </div>  
+        <div class="phone">
+            <label for="phone">Phone Number<span class="red_info"> *</span></label>
+            <input type="text" id="phone" name="phone" required
+            value="<%= typeof phone != 'undefined' ? phone : '' %>"
+            >
+        </div>
+        <div class="email">
+            <label for="email">Email<span class="red_info"> *</span></label>
+            <input type="email" id="email" name="email" required
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+            >
+        </div>
+        <div class="password">
+            <label for="password">Password<span class="red_info"> *</span></label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="password2">
+            <label for="password2">Confirm Password<span class="red_info"> *</span></label>
+            <input type="password2" id="password2" name="password2" required>
+        </div>
+        <button class="form-btn" type="submit">Submit</button>
+    </form>
+</div>
+<div class="pops">
+    <div class="popup-close" id="close-btn">&times;</div>
+    <form action="/api/auth/login" method="POST">
+        <div class="avatar">
+            <img src="/assets/login.png" alt="Login Avatar">
+        </div>  
+        <h1>Login Page</h1>
+        <div class="email">
+            <label for="email">Email<span class="red_info"> *</span></label>
+            <input type="email" id="email" name="email" required
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+            >
+        </div>
+        <div class="password">
+            <label for="password">Password<span class="red_info"> *</span></label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button class="form-btn" type="submit">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,41 @@
+<%- include('partials/header'); -%>
+    <div class="register_container">
+        <div class="register_card">
+            <form action="/api/auth/register" method="POST">
+                <%- include('partials/messages'); -%>
+                <div class="alert_success"><%= typeof msg != 'undefined' ? msg : '' %></div>
+                <div class="avatar">
+                    <img src="/assets/register.png" alt="Login Avatar">
+                </div>
+                <h1>User Registration</h1>
+                <div class="name">
+                    <label for="name">Full Name<span class="red_info"> *</span></label>
+                    <input type="text" id="name" name="name" required
+                    value="<%= typeof name != 'undefined' ? name : '' %>"
+                    >
+                </div>  
+                <div class="phone">
+                    <label for="phone">Phone Number<span class="red_info"> *</span></label>
+                    <input type="text" id="phone" name="phone" required
+                    value="<%= typeof phone != 'undefined' ? phone : '' %>"
+                    >
+                </div>
+                <div class="email">
+                    <label for="email">Email<span class="red_info"> *</span></label>
+                    <input type="email" id="email" name="email" required
+                    value="<%= typeof email != 'undefined' ? email : '' %>"
+                    >
+                </div>
+                <div class="password">
+                    <label for="password">Password<span class="red_info"> *</span></label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="password2">
+                    <label for="password2">Confirm Password<span class="red_info"> *</span></label>
+                    <input type="password2" id="password2" name="password2" required>
+                </div>
+                <button type="submit" class="reg-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+<%- include('partials/footer'); -%>

@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
+//Pass: UhXoJsWXNbNNjgGk
+//mongodb+srv://horler408:<password>@cluster0.nnle7.mongodb.net/<dbname>?retryWrites=true&w=majority
+
 const dbConnect = () => {
   mongoose
     .connect(
-      "mongodb+srv://horler408:" +
-        process.env.MONGO_ATLAS_PW +
-        "@cluster0.nnle7.mongodb.net/test?retryWrites=true&w=majority",
-      { useNewUrlParser: true, useUnifiedTopology: true }
+      "mongodb+srv://arseling:UhXoJsWXNbNNjgGk@cluster0.nnle7.mongodb.net/<dbname>?retryWrites=true&w=majority",
+      { useNewUrlParser: true }
     )
     .then(() => {
       console.log("Successfully connected to MongoDB Atlas!");

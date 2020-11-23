@@ -1,0 +1,28 @@
+<%- include('partials/header'); -%>
+<div class="dashboard_container">
+  <%- include('partials/messages'); -%>
+    <h1 class="gallery_title">Hello <%= typeof name != 'undefined' ? name : ''  %>, Welcome to the admin dashboard </h1>
+    <%= typeof msg != 'undefined' ? msg : ''  %>
+    <div class="gallery_contents">
+      <% if(typeof products != 'undefined'){ %> 
+        <% products.forEach(function(product) { %>
+      <div class="gallery_items">
+        <img src="<%= product.imageUrl %>" alt="" />
+        <div class="wrapper">
+            <p><%= product.title %></p>
+            <p><%= product.description %></p>
+            <p>#<%= product.price %></p>
+        </div>
+        <form method="POST" action="/api/product/<%= product._id %>?_method=PUT">
+          <button class="update_btn">Update</button>
+        </form>
+        <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
+          <button class="delete_btn">Delete</button>
+        </form>
+      </div>
+      <% }) %> <% } else { %>
+      <p>No files to show</p>
+      <% } %>
+    </div>
+</div>
+<%- include('partials/footer'); -%>
