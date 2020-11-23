@@ -1,7 +1,5 @@
   <%- include('partials/header'); -%>
     <div class="gallery_container">
-      <%= typeof msg != 'undefined' ? msg : ''  %>
-      <%- include("partials/messages"); -%>
       <div class="select">
         <select name="category" id="select">
           <option value="">Select by category</option>
@@ -10,7 +8,9 @@
           <option value="">Bags</option>
           <option value="">Ornaments</option>
         </select>
-      </div>   
+      </div>
+        <div class="gallery_info"><%= typeof msg != 'undefined' ? msg : ''  %></div>
+        <%- include("partials/messages"); -%>   
         <div class="gallery_contents">
           <% if(typeof products != 'undefined'){ %> 
             <% products.forEach(function(product) { %>

@@ -41,9 +41,10 @@ h1 {
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
 }
 .login_card {
-  min-height: 65vh;
+  min-height: 70vh;
 }
-.register_card {
+.register_card,
+.home_card {
   min-height: 100vh;
 }
 
@@ -119,6 +120,13 @@ form .avatar {
 form .avatar img {
   width: 120px;
   height: 100%;
+}
+
+.info-login {
+  margin: 10px;
+}
+.info-login a {
+  color: #222;
 }
 
 /* Index */
@@ -236,6 +244,11 @@ form .avatar img {
 }
 .gallery_items img:hover {
   transform: scale(1.2);
+}
+
+.gallery_info {
+  text-align: center;
+  color: forestgreen;
 }
 
 /* Details */

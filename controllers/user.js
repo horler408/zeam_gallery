@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const Product = require("./../models/product");
 
 exports.signup = (req, res) => res.render("register");
 exports.signin = (req, res) => res.render("login");
@@ -16,7 +17,7 @@ exports.register = (req, res, next) => {
   if(password.length < 6) {
     errors.push("Password must be atleast 6 characters long")
   }
-  if(password2 != password2) {
+  if(password != password2) {
     errors.push("Passwords must match")
   }
 
@@ -25,32 +26,39 @@ exports.register = (req, res, next) => {
       errors,
       name,
       email,
-      phone,
-      role
+      phone
     })
   }
-  bcrypt.hash(password, 10).then((hash) => {
-    const user = new User({
-      name,
-      email,
-      phone,
-      role,
-      password: hash,
-    });
-    user
-      .save()
-      .then(() => {
-        // res.render("login", {msg: "Your registration was successful, You can now log in"})
-        res.status(201).json({
-          message: "User added successfully",
+  User.findOne({email: email})
+  .then(user => {
+    if(user) {
+      return res.render("register", {msg: "User Already Exists"})
+    }
+    else {
+      bcrypt.hash(password, 10).then((hash) => {
+        const user = new User({
+          name,
+          email,
+          phone,
+          role,
+          password: hash,
         });
-      })
-      .catch((error) => {
-        res.status(500).json({
-          error: error,
-        });
-      });
-  });
+        user
+          .save()
+          .then(() => {
+            res.render("login", {msg: "Your registration was successful, You can now log in"})
+            // res.status(201).json({
+            //   message: "User added successfully",
+            // });
+          })
+          .catch((error) => {
+            return res.status(500).json({
+              error: error
+            });
+          });
+        })
+    }
+  })
 };
 
 exports.login = (req, res, next) => {
@@ -76,14 +84,15 @@ exports.login = (req, res, next) => {
             const token = jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "12h",
             });
-            req.flash("success_msg", "Logged in successfully")
-            res.redirect("/api/product")
-            
-            return res.status(200).json({
-              role: user.role,
-              userId: user._id,
-              token: token
-            });
+            Product.find().then(products => {
+              res.render("gallery", {
+                msg: "Successfully logged in",
+                products,
+                role: user.role,
+                userId: user._id,
+                token: token
+              })
+            })
           }
         })
         .catch((error) => {
