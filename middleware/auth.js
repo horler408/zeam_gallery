@@ -6,14 +6,14 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
     const userId = decodedToken.userId;
     if (req.body.userId && req.body.userId !== userId) {
-      req.flash("error_msg", "Unauthorized to Non admin user")
+      req.flash("error_msg", "You are not authorised")
       res.redirect("/")
     } else {
       next();
     }
   } catch {
-    req.flash("error_msg", "Unauthorised User, only admin is authorised to access that page")
-    res.redirect("/")
+    req.flash("error_msg", "You must log in to order an item")
+    res.redirect("/api/auth/login")
     // res.status(401).json({
     //   message: "Invalid request!"
     // });

@@ -195,7 +195,7 @@ form .avatar img {
   position: relative;
   overflow: hidden;
   background: #ffffff;
-  margin: 20px 0;
+  margin: 50px 0;
 }
 
 .title,
@@ -269,7 +269,7 @@ form .avatar img {
 }
 
 .detail_title {
-  top: 43%;
+  top: 28%;
 }
 
 .detail_item button {
@@ -288,7 +288,18 @@ form .avatar img {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 92%;
+  top: 98%;
+}
+
+.quantity {
+  height: 30px;
+  margin: 50px 0;
+}
+
+.quantity input {
+  height: 100%;
+  border: none;
+  font-size: 18px;
 }
 
 /* Header */
@@ -330,7 +341,7 @@ form .avatar img {
   left: 10px;
   top: 70px;
   width: 95%;
-  min-height: 70vh;
+  min-height: 80vh;
   color: #fff;
   z-index: 5;
   border-radius: 20px;

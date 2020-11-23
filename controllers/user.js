@@ -57,27 +57,33 @@ exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
-        return res.status(401).json({
-          message: "User not found!"
-        });
+        req.flash("error_msg", "User Not Found!")
+        return res.redirect("/api/auth/login");
+        // return res.status(401).json({
+        //   message: "User not found!"
+        // });
       }
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {
-            return res.status(404).json({
-              message: "Incorrect username or password!"
-            });
+            req.flash("error_msg", "Incorrect username or password!")
+            res.redirect("/api/auth/login");
+            // return res.status(404).json({
+            //   message: "Incorrect username or password!"
+            // });
           }else {
             const token = jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "12h",
             });
             req.flash("success_msg", "Logged in successfully")
             res.redirect("/api/product")
-            // res.status(200).json({
-            //   userId: user._id,
-            //   token: token
-            // });
+            
+            return res.status(200).json({
+              role: user.role,
+              userId: user._id,
+              token: token
+            });
           }
         })
         .catch((error) => {
