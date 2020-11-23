@@ -1,0 +1,19 @@
+//Root Endpoints
+"http://localhost:3000/"
+"http://localhost:3000/api/product"
+"http://localhost:3000/api/auth"
+
+//Product Endpoints
+GET:"http://localhost:3000/api/product/" --Get All images
+POST:"http://localhost:3000/api/product/"  --Create Products
+GET:"http://localhost:3000/api/product/dashboard" --Admin Gallery
+GET"http://localhost:3000/api/product/:id" --Get Single Product
+POST:"http://localhost:3000/api/product/:id" --Delete Product
+PUT:"http://localhost:3000/api/product/:id" --Midify Product
+
+//User Auth Endpoints
+"http://localhost:3000/api/auth/register" --Register User
+"http://localhost:3000/api/auth/login"  --Login User
+
+//Index
+"http://localhost:3000/" --Form to create products
