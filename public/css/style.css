@@ -215,6 +215,9 @@ form .avatar img {
   color: #ffffff;
   padding: 5px 10px;
 }
+.title {
+  top: 70%;
+}
 .price,
 .detail_price {
   position: absolute;
@@ -577,6 +580,7 @@ hr {
   /* Gallery */
   .select {
     width: 200px;
+    margin-left: 80px;
   }
   .gallery_contents {
     width: 100%;
