@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 const User = require("../models/user");
 const Product = require("./../models/product");
@@ -11,8 +12,8 @@ exports.register = (req, res, next) => {
   const {name, email, phone, role, password, password2} = req.body
   let errors = [];
 
-  if(!name || !email || !phone || !password || password2) {
-    errors.push("Please all the fields")
+  if(!name || !email || !phone || !password || !password2) {
+    errors.push("Please fill all the fields")
   }
   if(password.length < 6) {
     errors.push("Password must be atleast 6 characters long")
@@ -37,6 +38,7 @@ exports.register = (req, res, next) => {
     else {
       bcrypt.hash(password, 10).then((hash) => {
         const user = new User({
+          _id: new mongoose.Types.ObjectId(),
           name,
           email,
           phone,

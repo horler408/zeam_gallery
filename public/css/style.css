@@ -204,6 +204,7 @@ form .avatar img {
   overflow: hidden;
   background: #ffffff;
   margin: 50px 0;
+  min-height: 30vh;
 }
 
 .title,
@@ -535,6 +536,26 @@ hr {
   color: hsl(0, 87%, 67%);
   font-size: 0.5rem;
   width: 100%;
+}
+
+/* Preloader */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  visibility: visible;
+  z-index: 999;
+  transition: all 0.3s linear;
+}
+.hide-preloader {
+  z-index: -999;
+  visibility: hidden;
 }
 
 @media only screen and (min-width: 567px) {

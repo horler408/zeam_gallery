@@ -2,14 +2,14 @@
 <div class="login_container">
 
     <div class="login_card">
-        <%- include('partials/messages'); -%>
-        <div class="alert_success"><%= typeof msg != 'undefined' ? msg : '' %></div>
         
         <form action="/api/auth/login" method="POST">  
             <div class="avatar">
                 <img src="/assets/login.png" alt="Login Avatar">
             </div>
             <h1>Login Page</h1>
+            <%- include('partials/messages'); -%>
+            <div class="alert_success"><%= typeof msg != 'undefined' ? msg : '' %></div>
             <div class="email">
                 <label for="email">Email<span class="red_info"> *</span></label>
                 <input type="email" id="email" name="email" required
@@ -22,7 +22,7 @@
             </div>
             <button type="submit" class="log-btn">Submit</button>
         </form>
-        <div class="info-login">Register <a href="/api/auth/register">here</a></div>
+        <div class="info-login">New user? Register <a href="/api/auth/register">here</a></div>
     </div>
 </div>
 <%- include('partials/footer'); -%>

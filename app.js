@@ -9,7 +9,7 @@ const stuffRoutes = require("./routes/product");
 const userRoutes = require("./routes/user");
 const indexRoutes = require("./routes/index")
 
-const dbConnect = require("./config/dbRemote");
+const dbConnect = require("./config/db");
 
 const app = express();
 

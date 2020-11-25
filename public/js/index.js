@@ -44,3 +44,10 @@ sideToggle.addEventListener('click', () => {
     aside.classList.remove('show-sidebar');
     toggleBtn.classList.remove("show")
   })
+
+
+// Preloader
+const preloader = document.querySelector(".preloader");
+window.addEventListener("load", () => {
+  preloader.classList.add("hide-preloader");
+});
