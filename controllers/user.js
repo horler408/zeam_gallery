@@ -84,17 +84,20 @@ exports.login = (req, res, next) => {
             // });
           }else {
             const token = jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
-              expiresIn: "12h",
+              expiresIn: "2h",
             });
-            Product.find().then(products => {
-              res.render("gallery", {
+            Product.findOne({id: req.params._id}).then(product => {
+              res.render("details", {
                 msg: "Successfully logged in",
-                products,
+                product,
                 role: user.role,
-                userId: user._id,
                 token: token
               })
             })
+            // res.status(200).json({
+            //   message: "Success",
+            //   token
+            // })
           }
         })
         .catch((error) => {

@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-    const userId = decodedToken.userId;
+    req.user = decodedToken
     if (req.body.userId && req.body.userId !== userId) {
       req.flash("error_msg", "You are not authorised")
       res.redirect("/")
@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
       next();
     }
   } catch {
-    req.flash("error_msg", "You must log in to order an item")
+    req.flash("error_msg", "Authentication Failed!")
     res.redirect("/api/auth/login")
     // res.status(401).json({
     //   message: "Invalid request!"

@@ -41,9 +41,11 @@ h1 {
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
 }
 .login_card {
-  min-height: 70vh;
+  min-height: 80vh;
 }
-.register_card,
+.register_card {
+  min-height: 110vh;
+}
 .home_card {
   min-height: 100vh;
 }
@@ -674,14 +676,12 @@ hr {
   }
 
   .order_btn {
-    top: 87%;
+    top: 113%;
   }
   .detail_item p {
     min-height: 20vh;
   }
   .detail_title {
-    /* left: 25%;
-    transform: translateX(-25%); */
     top: 92%;
   }
 

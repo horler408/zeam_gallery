@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("./../controllers/user");
 const fs = require("fs");
 
 
@@ -115,9 +116,9 @@ exports.modifyProduct = (req, res) => {
   }  
   Product.updateOne({ _id: req.params.id }, product)
     .then(() => {
-      Product.find().then(products => {
-        req.flash("success_msg", "Product Updated Successfully!")
-        res.render("gallery", {products})
+      Product.findOne({_id: req.params.id})
+      .then(product => {
+        res.render("details", {product, msg: "Product Updated Successfully!"})
       })
       // res.status(200).json({
       //   message: "Product Updated Successfully!"

@@ -1,6 +1,8 @@
 <%- include('partials/header'); -%>
 
+<div class="alert_success"><%= typeof msg != 'undefined' ? msg : '' %></div>
 <div class="detail_card">
+    
     <% if(typeof product != 'undefined') { %>
         <div class="detail_content">
             <div class="image">
@@ -14,13 +16,16 @@
                     <label for="">Quantity</label>
                     <input type="number" value="1"/>
                 </div>
-                <div>
-                        <form method="GET" action="/api/product/update/<%= product._id %>">
-                            <button class="update_btn">Update</button>
-                        </form>
-                        <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
-                            <button class="delete_btn">Delete</button>
-                        </form>
+                    <% if(typeof role != 'undefined' && role == 'admin') { %>
+                        <div>
+                            <form method="GET" action="/api/product/update/<%= product._id %>">
+                                <button class="update_btn">Update</button>
+                            </form>
+                            <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
+                                <button class="delete_btn">Delete</button>
+                            </form>
+                        </div>
+                    <% } %>
                 </div>
             </div>
         </div>
