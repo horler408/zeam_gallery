@@ -7,7 +7,8 @@ const flash = require("connect-flash");
 
 const stuffRoutes = require("./routes/product");
 const userRoutes = require("./routes/user");
-const indexRoutes = require("./routes/index")
+const indexRoutes = require("./routes/index");
+const orderRoutes = require("./routes/order");
 
 const dbConnect = require("./config/dbRemote");
 
@@ -51,6 +52,7 @@ app.use(function (req, res, next) {
 //Routes
 app.use('/', indexRoutes)
 app.use("/api/product", stuffRoutes);
+app.use("/api/order", orderRoutes);
 app.use("/api/auth", userRoutes);
 
 module.exports = app;

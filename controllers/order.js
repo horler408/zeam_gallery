@@ -34,6 +34,7 @@ exports.getAll = (req, res) => {
     });
 }
 
+// Make order by the user
 exports.createOrder = (req, res) => {
   Product.findById(req.body.productId)
     .then((product) => {
@@ -45,7 +46,7 @@ exports.createOrder = (req, res) => {
       const order = new Order({
         _id: mongoose.Types.ObjectId(),
         quantity: req.body.quantity,
-        product: req.body.productId,
+        product: req.body.productId
       });
       return order.save();
     })
@@ -60,7 +61,7 @@ exports.createOrder = (req, res) => {
         },
         request: {
           type: "GET",
-          url: "http://localhost:5000/orders/" + result._id,
+          url: "http://localhost:5000/api/order/" + result._id,
         },
       });
     })
@@ -72,6 +73,7 @@ exports.createOrder = (req, res) => {
     });
 }
 
+// View order by the user
 exports.getOrder = (req, res) => {
   Order.findById(req.params.orderId)
     .populate("product")
@@ -97,6 +99,7 @@ exports.getOrder = (req, res) => {
     });
 }
 
+// Remove order by the user
 exports.deleteOrder = (req, res) => {
   Order.remove({ _id: req.params.orderId })
     .exec()

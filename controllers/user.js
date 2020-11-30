@@ -124,3 +124,18 @@ exports.users = (req, res) => {
     })
   })
 }
+
+exports.deleteUser = (req, res) => {
+  User.deleteOne({ _id: req.params.id })
+  .then(() => {
+    res.status(200).json({
+      message: "Deleted Successfully!"
+    });
+   })
+  .catch(error => {
+    res.status(404).json({
+      error: error
+    });
+  })
+}  
+
