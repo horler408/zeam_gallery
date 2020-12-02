@@ -20,13 +20,16 @@
                     <label for="">Product Id</label>
                     <input type="text" value="<%= product._id %>" name="productId"/>
                 </div>
-                <div>
-                    <form method="GET" action="/api/product/update/<%= product._id %>">
-                        <button class="update_btn">Update</button>
-                    </form>
-                    <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
-                        <button class="delete_btn">Delete</button>
-                    </form>
+                    <% if(typeof role != 'undefined' && role == 'admin') { %>
+                        <div>
+                            <form method="GET" action="/api/product/update/<%= product._id %>">
+                                <button class="update_btn">Update</button>
+                            </form>
+                            <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
+                                <button class="delete_btn">Delete</button>
+                            </form>
+                        </div>
+                    <% } %>
                 </div>
             </div>
         </div>

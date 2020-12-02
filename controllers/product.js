@@ -1,6 +1,9 @@
+const mongoose = require("mongoose");
+const fs = require("fs");
+
 const Product = require("../models/product");
 const User = require("./../controllers/user");
-const fs = require("fs");
+
 
 
 exports.createProduct = (req, res) => {
@@ -29,6 +32,7 @@ exports.createProduct = (req, res) => {
     });
   }else {
     const product = new Product({
+      _id: mongoose.Types.ObjectId(),
       title,
       description,
       imageUrl: url + "/images/" + req.file.filename,

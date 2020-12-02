@@ -20,13 +20,14 @@ dbConnect();
 app.use(expressLayouts)
 app.set('view engine', 'ejs');
 
-// Bode Parser
+// Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Static Files
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static("images"));
+//app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static('./public'));
 
 //Express Session
@@ -52,7 +53,23 @@ app.use(function (req, res, next) {
 //Routes
 app.use('/', indexRoutes)
 app.use("/api/product", stuffRoutes);
-app.use("/api/order", orderRoutes);
+app.use("/api/orders", orderRoutes);
 app.use("/api/auth", userRoutes);
+
+//Error Handling
+app.use((req, res, next) => {
+  const error = new Error("Not Found!");
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
+});
 
 module.exports = app;

@@ -21,7 +21,7 @@ exports.getAll = (req, res) => {
             quantity: doc.quantity,
             request: {
               type: "GET",
-              url: "http://localhost:5000/orders/" + doc._id,
+              url: "http://localhost:3000/api/orders/" + doc._id,
             },
           };
         }),
@@ -51,7 +51,7 @@ exports.createOrder = (req, res) => {
       return order.save();
     })
     .then((result) => {
-      console.log(result);
+      //console.log(result);
       res.status(201).json({
         message: "Orders created succesfully!",
         createdOrder: {
@@ -61,12 +61,12 @@ exports.createOrder = (req, res) => {
         },
         request: {
           type: "GET",
-          url: "http://localhost:5000/api/order/" + result._id,
+          url: "http://localhost:3000/api/orders/" + result._id,
         },
       });
     })
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
       res.status(500).json({
         error: err,
       });
@@ -88,7 +88,7 @@ exports.getOrder = (req, res) => {
         order: order,
         request: {
           type: "GET",
-          url: "http://localhost:5000/orders/",
+          url: "http://localhost:3000/api/orders/",
         },
       });
     })
@@ -108,7 +108,7 @@ exports.deleteOrder = (req, res) => {
         message: "Order Deleted Successfully!",
         request: {
           type: "POST",
-          url: "http://localhost:5000/orders/",
+          url: "http://localhost:3000/api/orders/",
           body: { productId: "ID", quantity: "Number" },
         },
       });
