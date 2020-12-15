@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const expressLayouts = require('express-ejs-layouts')
 const session = require("express-session");
 const path = require("path");
+const dotenv = require("dotenv");
 const flash = require("connect-flash");
 
 const stuffRoutes = require("./routes/product");
@@ -15,6 +16,7 @@ const dbConnect = require("./config/dbRemote");
 const app = express();
 
 dbConnect();
+dotenv.config();
 
 // EJS
 app.use(expressLayouts)
@@ -71,5 +73,11 @@ app.use((error, req, res, next) => {
     },
   });
 });
+
+// Undefined Routes
+app.get("*", function(req, res) {
+  logger.info("users route");
+  res.send("App works!!!!!");
+})
 
 module.exports = app;
