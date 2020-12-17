@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 
 const Product = require("../models/product");
-const User = require("./../controllers/user");
+//const User = require("./../controllers/user");
 
 
 exports.createProduct = (req, res) => {
-  const { title, description, price, category, imageUrl} = req.body
-  //const url = req.protocol + "://" + req.get("host");
+  const { title, description, price, category} = req.body
+  const url = req.protocol + "://" + req.get("host");
   let errors = [];
 
   if (!title || !description || !price || !category) {
@@ -18,16 +18,15 @@ exports.createProduct = (req, res) => {
     errors.push({ msg: "Please enter a valid product name" });
   }
 
-  // if (req.file == undefined) {
-  //   errors.push({ msg: "You must choose a file to upload" })
-  // }
+  if (req.file == undefined) {
+    errors.push({ msg: "You must choose a file to upload" })
+  }
 
   if (errors.length > 0) {
     res.render("home", {
       errors,
       title,
       description,
-      imageUrl,
       price
     });
   }else {
@@ -35,8 +34,7 @@ exports.createProduct = (req, res) => {
       _id: mongoose.Types.ObjectId(),
       title,
       description,
-      //imageUrl: url + "/images/" + req.file.filename,
-      imageUrl,
+      imageUrl: url + "/images/" + req.file.filename,
       price,
       category
     });
