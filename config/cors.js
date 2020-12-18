@@ -1,4 +1,5 @@
-app.use((req, res, next) => {
+
+const cors = (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -9,4 +10,6 @@ app.use((req, res, next) => {
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   next();
-});
+};
+
+module.exports = cors;

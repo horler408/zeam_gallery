@@ -5,6 +5,7 @@ const session = require("express-session");
 const path = require("path");
 const dotenv = require("dotenv");
 const flash = require("connect-flash");
+const serveIndex = require('serve-index')
 
 const stuffRoutes = require("./routes/product");
 const userRoutes = require("./routes/user");
@@ -18,6 +19,20 @@ const app = express();
 dbConnect();
 dotenv.config();
 
+// CORS
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  );
+  next();
+});
+
 // EJS
 app.use(expressLayouts)
 app.set('view engine', 'ejs');
@@ -28,9 +43,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Static Files
-app.use("/images", express.static("images"));
 //app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static('./public'));
+app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}));
 
 //Express Session
 app.use(

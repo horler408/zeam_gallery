@@ -6,7 +6,7 @@ const Product = require("../models/product");
 
 
 exports.createProduct = (req, res) => {
-  const { title, description, price, category} = req.body
+  const { title, description, price, category } = req.body
   const url = req.protocol + "://" + req.get("host");
   let errors = [];
 
