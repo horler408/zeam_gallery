@@ -45,7 +45,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Static Files
 //app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static('./public'));
-app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}));
+//app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}));
 
 //Express Session
 app.use(

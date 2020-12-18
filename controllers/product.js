@@ -34,17 +34,18 @@ exports.createProduct = (req, res) => {
       _id: mongoose.Types.ObjectId(),
       title,
       description,
-      imageUrl: url + "/images/" + req.file.filename,
+      //imageUrl: url + "/images/" + req.file.filename,
+      imageUrl: url + "/uploads/" + req.file.filename,
       price,
       category
     });
     product
       .save()
       .then(() => {
-        //res.render("home", {msg: "Product saved successfully!"})
-        res.status(200).json({
-          message: "Product saved successfully!"
-        });
+        res.render("home", {msg: "Product saved successfully!"})
+        // res.status(200).json({
+        //   message: "Product saved successfully!"
+        // });
       })
       .catch(err => {
         res.status(400).json({
@@ -59,7 +60,7 @@ exports.getAllProduct = (req, res, next) => {
   .select("id title price description imageUrl")
     .then(products => {
       res.render("gallery", {products})
-      // res.status(200).json(products);
+      //res.status(200).json(products);
     })
     .catch(err => {
       res.status(400).json({
