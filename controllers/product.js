@@ -35,7 +35,7 @@ exports.createProduct = (req, res) => {
       title,
       description,
       //imageUrl: url + "/images/" + req.file.filename,
-      imageUrl: url + "/uploads/" + req.file.filename,
+      imageUrl: "./public/uploads/" + req.file.filename,
       price,
       category
     });
