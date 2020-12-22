@@ -15,13 +15,23 @@
           <% if(typeof products != 'undefined'){ %> 
             <% products.forEach(function(product) { %>
           <div class="gallery_items">
-              <img src="<%= product.imageUrl %>" alt="<%= product.title %>" loading="lazy" />
+              <img src="<%= product.imageUrl %>" alt="<%= product.title %>" />
               <div class="title"><%= product.title.toUpperCase() %></div>
               <div class="price">#<%= product.price %></div>
               <p class="item_order"><a href="/api/product/<%= product.id  %>">Click to order</a></p>
           </div>
-          <% }) %> <% } else { %>
-          <p>No files to show</p>
+          <% }) %> 
+          <% } else if(typeof filteredProducts != 'undefined'){ %>
+            <% filteredProducts.forEach(function(filteredProduct) { %>
+              <div class="gallery_items">
+                  <img src="<%= filteredProduct.imageUrl %>" alt="<%= filteredProduct.title %>" />
+                  <div class="title"><%= filteredProduct.title.toUpperCase() %></div>
+                  <div class="price">#<%= filteredProduct.price %></div>
+                  <p class="item_order"><a href="/api/product/<%= filteredProduct.id  %>">Click to order</a></p>
+              </div>
+            <% }) %> 
+            <% } else { %>
+            <p>No files to show</p>
           <% } %>
         </div>
     </div>

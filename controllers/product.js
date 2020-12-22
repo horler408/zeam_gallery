@@ -34,8 +34,8 @@ exports.createProduct = (req, res) => {
       _id: mongoose.Types.ObjectId(),
       title,
       description,
-      //imageUrl: url + "/images/" + req.file.filename,
-      imageUrl: url + "/uploads/" + req.file.filename,
+      imageUrl: url + "/images/" + req.file.filename,
+      //imageUrl: url + "/uploads/" + req.file.filename,
       price,
       category
     });
@@ -59,6 +59,15 @@ exports.getAllProduct = (req, res, next) => {
   Product.find()
   .select("id title price description imageUrl")
     .then(products => {
+      const category = req.query.category
+      
+      if(category) {
+        const filteredProducts = products.filter(product => {
+          return product.category === category
+        })
+        return res.json(filteredProducts)
+        //return res.render("gallery", {filteredProducts})
+      }
       res.render("gallery", {products})
       //res.status(200).json(products);
     })
