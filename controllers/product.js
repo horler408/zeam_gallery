@@ -34,8 +34,8 @@ exports.createProduct = (req, res) => {
       _id: mongoose.Types.ObjectId(),
       title,
       description,
-      imageUrl: url + "/images/" + req.file.filename,
-      //imageUrl: url + "/uploads/" + req.file.filename,
+      //imageUrl: url + "/images/" + req.file.filename,
+      imageUrl: "./public/uploads/" + req.file.filename,
       price,
       category
     });
