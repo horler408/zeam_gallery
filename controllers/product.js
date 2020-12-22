@@ -6,8 +6,8 @@ const Product = require("../models/product");
 
 
 exports.createProduct = (req, res) => {
-  const { title, description, price, category } = req.body
-  const url = req.protocol + "://" + req.get("host");
+  const { title, description, price, category, imageUrl } = req.body
+  //const url = req.protocol + "://" + req.get("host");
   let errors = [];
 
   if (!title || !description || !price || !category) {
@@ -18,24 +18,20 @@ exports.createProduct = (req, res) => {
     errors.push({ msg: "Please enter a valid product name" });
   }
 
-  if (req.file == undefined) {
-    errors.push({ msg: "You must choose a file to upload" })
-  }
+  // if (req.file == undefined) {
+  //   errors.push({ msg: "You must choose a file to upload" })
+  // }
 
   if (errors.length > 0) {
-    res.render("home", {
-      errors,
-      title,
-      description,
-      price
-    });
+    return errors;
   }else {
     const product = new Product({
       _id: mongoose.Types.ObjectId(),
       title,
       description,
       //imageUrl: url + "/images/" + req.file.filename,
-      imageUrl: "./public/uploads/" + req.file.filename,
+      //imageUrl: "./public/uploads/" + req.file.filename,
+      imageUrl,
       price,
       category
     });
@@ -59,15 +55,15 @@ exports.getAllProduct = (req, res, next) => {
   Product.find()
   .select("id title price description imageUrl")
     .then(products => {
-      const category = req.query.category
+      //const category = req.query.category
       
-      if(category) {
-        const filteredProducts = products.filter(product => {
-          return product.category === category
-        })
-        return res.json(filteredProducts)
-        //return res.render("gallery", {filteredProducts})
-      }
+      // if(category) {
+      //   const filteredProducts = products.filter(product => {
+      //     return product.category === category
+      //   })
+      //   return res.json(filteredProducts)
+      //   //return res.render("gallery", {filteredProducts})
+      // }
       res.render("gallery", {products})
       //res.status(200).json(products);
     })
@@ -113,7 +109,7 @@ exports.modifyProduct = (req, res) => {
       _id: req.params.id,
       title: req.body.title,
       description: req.body.description,
-      imageUrl: url + "/images/" + req.file.filename,
+      imageUrl: "./public/uploads/" + req.file.filename,
       price: req.body.price,
       category: req.body.category
     };

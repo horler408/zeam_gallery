@@ -39,6 +39,13 @@
                 value="<%= typeof product != 'undefined' ? product.price : '' %>"
                 >
             </div>
+            <div class="product_image">
+                <label for="image">Image Upload</label>
+                <input type="text" id="image" name="imageUrl" disabled
+                value="<%= typeof product != 'undefined' ? product.imageUrl : '' %>"
+                >
+            </div>
+
             <button type="submit" class="update_btn">Submit</button>
 
         </form>

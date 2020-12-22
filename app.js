@@ -12,7 +12,7 @@ const userRoutes = require("./routes/user");
 const indexRoutes = require("./routes/index");
 const orderRoutes = require("./routes/order");
 
-const dbConnect = require("./config/db");
+const dbConnect = require("./config/dbRemote");
 
 const app = express();
 
@@ -20,18 +20,6 @@ dbConnect();
 dotenv.config();
 
 // CORS
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  next();
-});
 
 // EJS
 app.use(expressLayouts)
@@ -45,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Static Files
 //app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static('./public'));
-app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}));
+//app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}));
 
 //Express Session
 app.use(
@@ -74,24 +62,24 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/auth", userRoutes);
 
 //Error Handling
-app.use((req, res, next) => {
-  const error = new Error("Not Found!");
-  error.status = 404;
-  next(error);
-});
+// app.use((req, res, next) => {
+//   const error = new Error("Not Found!");
+//   error.status = 404;
+//   next(error);
+// });
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message,
-    },
-  });
-});
+// app.use((error, req, res, next) => {
+//   res.status(error.status || 500);
+//   res.json({
+//     error: {
+//       message: error.message,
+//     },
+//   });
+// });
 
 // Undefined Routes
 app.get("*", function(req, res) {
-  logger.info("users route");
+  //logger.info("users route");
   res.send("App works!!!!!");
 })
 

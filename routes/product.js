@@ -8,7 +8,7 @@ const multer = require("../middleware/multer-config");
 
 router.get("/", productCrtl.getAllProduct);
 
-router.post("/?category", multer, productCrtl.createProduct);
+router.post("/", productCrtl.createProduct);
 
 router.get("/:id", productCrtl.getOneProduct);
 
