@@ -1,28 +1,23 @@
 <%- include('partials/header'); -%>
 <div class="dashboard_container">
   <%- include('partials/messages'); -%>
-    <h1 class="gallery_title">Hello <%= typeof name != 'undefined' ? name : ''  %>, Welcome to the admin dashboard </h1>
-    <%= typeof msg != 'undefined' ? msg : ''  %>
-    <div class="gallery_contents">
-      <% if(typeof products != 'undefined'){ %> 
-        <% products.forEach(function(product) { %>
-      <div class="gallery_items">
-        <img src="<%= product.imageUrl %>" alt="" />
-        <div class="wrapper">
-            <p><%= product.title %></p>
-            <p><%= product.description %></p>
-            <p>#<%= product.price %></p>
-        </div>
-        <form method="POST" action="/api/product/<%= product._id %>?_method=PUT">
-          <button class="update_btn">Update</button>
-        </form>
-        <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
-          <button class="delete_btn">Delete</button>
-        </form>
-      </div>
-      <% }) %> <% } else { %>
-      <p>No files to show</p>
-      <% } %>
-    </div>
+  <%= typeof msg != 'undefined' ? msg : ''  %>
+  <% if(typeof user != 'undefined') { %>
+    <% var user = user %>
+    <h1 class="dashboard_title">Hello <%= user.name %>, Welcome to your dashboard </h1>
+    <script>
+      let user = "<%- user.role %>";
+      localStorage.setItem("role", JSON.stringify({'user': user}))
+    </script>
+  <% } %>
+
+  <% if(typeof token != 'undefined') { %>
+    <% var token = token %>
+    <script>
+      let token = "<%- token %>";
+      localStorage.setItem("token", token)
+    </script>
+  <% } %>
+  <button onclick="logout()">Logout</button>  
 </div>
 <%- include('partials/footer'); -%>

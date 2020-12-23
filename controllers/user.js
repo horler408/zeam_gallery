@@ -86,13 +86,18 @@ exports.login = (req, res, next) => {
             const token = jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "2h",
             });
-            Product.findOne({id: req.params._id}).then(product => {
-              res.render("details", {
-                msg: "Successfully logged in",
-                product,
-                role: user.role,
-                token: token
-              })
+            // Product.findOne({id: req.params._id}).then(product => {
+            //   res.render("details", {
+            //     msg: "Successfully logged in",
+            //     product,
+            //     role: user.role,
+            //     token: token
+            //   })
+            // })
+            res.render("dashboard", {
+              msg: "Successfully logged in",
+              user: user,
+              token: token
             })
             // res.status(200).json({
             //   message: "Success",
@@ -116,7 +121,8 @@ exports.login = (req, res, next) => {
 exports.users = (req, res) => {
   User.find().exec()
   .then(users => {
-    res.status(200).json(users)
+    res.render('users', {users})
+    //res.status(200).json(users)
   })
   .catch(err => {
     res.status(500).json({

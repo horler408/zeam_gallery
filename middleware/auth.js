@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
       next();
     }
   } catch {
-    req.flash("error_msg", "Authentication Failed!")
+    req.flash("error_msg", "Authentication Failed! Please log in")
     res.redirect("/api/auth/login")
     // res.status(401).json({
     //   message: "Invalid request!"

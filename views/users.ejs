@@ -1,0 +1,35 @@
+<%- include('partials/header'); -%>
+<table>
+    <thead>
+        <tr>
+            <th scope="col">S/N</th>
+            <th scope="col">ID</th>
+            <th scope="col">Role</th>
+            <th scope="col">Names</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(typeof users != 'undefined') { %>
+            <% users.forEach(function (user, i) { %>
+                <tr>
+                    <th scope="row"><%= i+1 %></th>
+                    <td><%= user._id %></td>
+                    <td><%= user.role %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
+                </tr>
+            <% }) %>
+        <% } %> 
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">TOTAL USERS</td>
+            <td><%= users.length %></td>	
+        </tr>
+    </tfoot>
+</table>
+
+<%- include('partials/footer'); -%>

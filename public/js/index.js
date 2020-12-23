@@ -55,3 +55,8 @@ window.addEventListener("load", () => {
 
 // Select Change
 const select = document.getElementById('select')
+
+//Credentials
+function logout() {
+  localStorage.clear();
+}

@@ -5,7 +5,7 @@
         <form action="/api/product/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
             <div class="product_id">
                 <label for="id">Product Id<span class="red_info"> *</span></label>
-                <input type="text" id="id" name="id" required
+                <input type="text" id="id" name="id" required disabled
                 value="<%= typeof product != 'undefined' ? product._id : '' %>"
                 >
             </div>
@@ -28,9 +28,12 @@
                 >
                     <option value="">Choose category</option>
                     <option value="fabrics">Fabrics</option>
+                    <option value="clothes">Clothes</option>
+                    <option value="bed-sheets">Bed Sheets</option>
                     <option value="bags">Bags</option>
-                    <option value="shoe">Shoe</option>
+                    <option value="shoes">Shoes</option>
                     <option value="ornaments">Ornaments</option>
+                    <option value="accessories">Accessories</option>
                 </select>
             </div>
             <div class="price_form">
@@ -41,7 +44,7 @@
             </div>
             <div class="product_image">
                 <label for="image">Image Upload</label>
-                <input type="text" id="image" name="imageUrl" disabled
+                <input type="text" id="image" name="imageUrl"
                 value="<%= typeof product != 'undefined' ? product.imageUrl : '' %>"
                 >
             </div>

@@ -18,15 +18,22 @@
                 </div>
                 <div class="quantity">
                     <label for="">Product Id</label>
-                    <input type="text" value="<%= product._id %>" name="productId"/>
+                    <input type="text" value="<%= product._id %>" name="productId" disabled/>
                 </div>
-                <div>
-                    <form method="GET" action="/api/product/update/<%= product._id %>">
-                        <button class="update_btn">Update</button>
-                    </form>
-                    <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
-                        <button class="delete_btn">Delete</button>
-                    </form>
+                <% { %>
+                <script>
+                    var role = localStorage.getItem('role')
+                    role.user === 'admin' ?
+                            <div>
+                                <form method="GET" action="/api/product/update/<%= product._id %>">
+                                    <button class="update_btn">Update</button>
+                                </form>
+                                <form method="POST" action="/api/product/<%= product._id %>?_method=DELETE">
+                                    <button class="delete_btn">Delete</button>
+                                </form>
+                            </div> : ''
+                    </script>
+                <% } %>
                 </div>
             </div>
         </div>
