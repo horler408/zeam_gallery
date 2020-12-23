@@ -6,7 +6,7 @@ const adminAuth = require("./../middleware/adminAuth")
 const indexController = require('./../controllers/index')
 
 router.get('/', indexController.index);
-router.get("/inventory", adminAuth, indexController.inventory);
+router.get("/inventory", indexController.inventory);
 //router.get("/gallery", indexController.gallery);
 router.get("/dashboard", auth, indexController.dashboard)
 

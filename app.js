@@ -5,7 +5,6 @@ const session = require("express-session");
 const path = require("path");
 const dotenv = require("dotenv");
 const flash = require("connect-flash");
-const serveIndex = require('serve-index')
 
 const stuffRoutes = require("./routes/product");
 const userRoutes = require("./routes/user");
@@ -26,14 +25,13 @@ app.use(expressLayouts)
 app.set('view engine', 'ejs');
 
 // Body Parser
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 // Static Files
-//app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static('./public'));
-//app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}));
 
 //Express Session
 app.use(
@@ -62,20 +60,20 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/auth", userRoutes);
 
 //Error Handling
-app.use((req, res, next) => {
-  const error = new Error("Not Found!");
-  error.status = 404;
-  next(error);
-});
+// app.use((req, res, next) => {
+//   const error = new Error("Not Found!");
+//   error.status = 404;
+//   next(error);
+// });
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message,
-    },
-  });
-});
+// app.use((error, req, res, next) => {
+//   res.status(error.status || 500);
+//   res.json({
+//     error: {
+//       message: error.message,
+//     },
+//   });
+// });
 
 // Undefined Routes
 app.get("*", function(req, res) {

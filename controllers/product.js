@@ -6,7 +6,7 @@ const Product = require("../models/product");
 
 
 exports.createProduct = (req, res) => {
-  const { title, description, price, category, imageUrl } = req.body
+  const { title, description, price, category } = req.body
   //const url = req.protocol + "://" + req.get("host");
   let errors = [];
 
@@ -18,9 +18,9 @@ exports.createProduct = (req, res) => {
     errors.push({ msg: "Please enter a valid product name" });
   }
 
-  // if (req.file == undefined) {
-  //   errors.push({ msg: "You must choose a file to upload" })
-  // }
+  if (req.file == undefined) {
+    errors.push({ msg: "You must choose a file to upload" })
+  }
 
   if (errors.length > 0) {
     return errors;
@@ -29,16 +29,16 @@ exports.createProduct = (req, res) => {
       _id: mongoose.Types.ObjectId(),
       title,
       description,
-      //imageUrl: url + "/images/" + req.file.filename,
+      imageUrl: "./images/" + req.file.filename,
       //imageUrl: "./public/uploads/" + req.file.filename,
-      imageUrl,
+      //imageUrl,
       price,
       category
     });
     product
       .save()
       .then(() => {
-        res.render("home", {msg: "Product saved successfully!"})
+        res.render("inventory", {msg: "Product saved successfully!"})
         // res.status(200).json({
         //   message: "Product saved successfully!"
         // });
