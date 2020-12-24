@@ -1,10 +1,12 @@
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const fs = require("fs");
 
 const Product = require("../models/product");
-//const User = require("./../controllers/user");
 
+//const { uploader } = require('./../config/cloudinaryConfig');
+//const { dataUri } = require('./../middleware/multer');
 
+/*
 exports.createProduct = (req, res) => {
   const { title, description, price, category } = req.body
   //const url = req.protocol + "://" + req.get("host");
@@ -29,12 +31,31 @@ exports.createProduct = (req, res) => {
       _id: mongoose.Types.ObjectId(),
       title,
       description,
-      imageUrl: "./images/" + req.file.filename,
+      //imageUrl: "./images/" + req.file.filename,
       //imageUrl: "./public/uploads/" + req.file.filename,
       //imageUrl,
       price,
       category
     });
+
+    if(req.file) {
+      //const file = dataUri(req).content;
+      const path = req.file.path
+      return uploader.upload(path).then((result) => {
+        const image = result.url;
+        product.imageUrl = image
+      // return res.status(200).json({
+      // messge: 'Your image has been uploded successfully to cloudinary',
+      // data: {
+      // image
+      // }
+      // })
+      }).catch((err) => res.status(400).json({
+        messge: 'someting went wrong while processing your request',
+        data: {err}
+      }))
+    }
+      
     product
       .save()
       .then(() => {
@@ -50,6 +71,7 @@ exports.createProduct = (req, res) => {
       });
   }
 };
+*/
 
 exports.getAllProduct = (req, res, next) => {
   Product.find()

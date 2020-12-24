@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const dbConnect = () => {
-  mongoose.connect("mongodb://localhost:27017/open-product", {
+  mongoose.connect("mongodb://localhost:27017/zeeam-product", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   });

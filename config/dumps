@@ -1,0 +1,34 @@
+const cloudinary = require('cloudinary').v2
+
+upload(req, res, function(err) {
+      if (err) {
+        return res.send(err)
+      }
+      console.log('file uploaded to server')
+      console.log(req.file)
+    
+      // SEND FILE TO CLOUDINARY
+      cloudinary.config({
+        cloud_name: 'horlertech',
+        api_key: '833863394211228',
+        api_secret: 'SU6co9rc2J_yjIsGJgvehJeuQd4'
+      })
+      
+      const path = req.file.path
+      const uniqueFilename = new Date().toISOString()
+    
+      cloudinary.uploader.upload(
+        path,
+        { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` }, // directory and tags are optional
+        function(err, image) {
+          if (err) return res.send(err)
+          console.log('file uploaded to Cloudinary')
+          // remove file from server
+          const fs = require('fs')
+          fs.unlinkSync(path)
+          // return image details
+          product.imageUrl = image
+          //res.json(image)
+        }
+      )
+    })

@@ -12,6 +12,7 @@ const indexRoutes = require("./routes/index");
 const orderRoutes = require("./routes/order");
 
 const dbConnect = require("./config/dbRemote");
+//const { cloudinaryConfig } = require('./config/cloudinaryConfig')
 
 const app = express();
 
@@ -32,6 +33,9 @@ app.use(bodyParser.json());
 // Static Files
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static('./public'));
+//app.use(express.static('/images'));
+
+//app.use('*', cloudinaryConfig);
 
 //Express Session
 app.use(
