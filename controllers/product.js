@@ -34,9 +34,9 @@ exports.createProduct = (req, res) => {
         
             // SEND FILE TO CLOUDINARY
             cloudinary.config({
-                cloud_name: 'horlertech', 
-                api_key: '833863394211228', 
-                api_secret: 'SU6co9rc2J_yjIsGJgvehJeuQd4'
+                cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+                api_key: process.env.CLOUDINARY_API_KEY, 
+                api_secret: process.env.CLOUDINARY_API_SECRET
             })
             
             const path = req.file.path

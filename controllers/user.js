@@ -83,7 +83,7 @@ exports.login = (req, res, next) => {
             //   message: "Incorrect username or password!"
             // });
           }else {
-            const token = jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+            const token = jwt.sign({ userId: user._id }, process.env.SECRET, {
               expiresIn: "2h",
             });
             // Product.findOne({id: req.params._id}).then(product => {
