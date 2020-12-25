@@ -1,91 +1,99 @@
-//const mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const cloudinary = require('cloudinary').v2;
 const fs = require("fs");
 
 const Product = require("../models/product");
+const upload = require('./../middleware/multer');
 
-//const { uploader } = require('./../config/cloudinaryConfig');
-//const { dataUri } = require('./../middleware/multer');
 
-/*
 exports.createProduct = (req, res) => {
   const { title, description, price, category } = req.body
-  //const url = req.protocol + "://" + req.get("host");
-  let errors = [];
+    let errors = [];
 
-  if (!title || !description || !price || !category) {
-    errors.push({ msg: "Please enter all neccessary fields" });
-  }
-
-  if (title.length < 3) {
-    errors.push({ msg: "Please enter a valid product name" });
-  }
-
-  if (req.file == undefined) {
-    errors.push({ msg: "You must choose a file to upload" })
-  }
-
-  if (errors.length > 0) {
-    return errors;
-  }else {
-    const product = new Product({
-      _id: mongoose.Types.ObjectId(),
-      title,
-      description,
-      //imageUrl: "./images/" + req.file.filename,
-      //imageUrl: "./public/uploads/" + req.file.filename,
-      //imageUrl,
-      price,
-      category
-    });
-
-    if(req.file) {
-      //const file = dataUri(req).content;
-      const path = req.file.path
-      return uploader.upload(path).then((result) => {
-        const image = result.url;
-        product.imageUrl = image
-      // return res.status(200).json({
-      // messge: 'Your image has been uploded successfully to cloudinary',
-      // data: {
-      // image
-      // }
-      // })
-      }).catch((err) => res.status(400).json({
-        messge: 'someting went wrong while processing your request',
-        data: {err}
-      }))
+    if (!title || !description || !price || !category) {
+        errors.push({ msg: "Please enter all neccessary fields" });
     }
-      
-    product
-      .save()
-      .then(() => {
-        res.render("inventory", {msg: "Product saved successfully!"})
-        // res.status(200).json({
-        //   message: "Product saved successfully!"
-        // });
-      })
-      .catch(err => {
-        res.status(400).json({
-          error: err
-        });
-      });
-  }
-};
-*/
+
+    if (title.length < 3) {
+        errors.push({ msg: "Please enter a valid product name" });
+    }
+
+    if (req.file == undefined) {
+        errors.push({ msg: "You must choose a file to upload" })
+    }
+
+    if (errors.length > 0) {
+        return errors;
+    }else {
+        upload(req, res, function(err) {
+            if (err) {
+              return res.send(err)
+            }
+            console.log('file uploaded to server')
+            //console.log(req.file)
+        
+            // SEND FILE TO CLOUDINARY
+            cloudinary.config({
+                cloud_name: 'horlertech', 
+                api_key: '833863394211228', 
+                api_secret: 'SU6co9rc2J_yjIsGJgvehJeuQd4'
+            })
+            
+            const path = req.file.path
+            const uniqueFilename = new Date().toISOString()
+        
+            cloudinary.uploader.upload(
+              path,
+              { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` },
+              function(err, image) {
+                if (err) return res.send(err)
+                console.log('file uploaded to Cloudinary')
+                // remove file from server
+                //fs.unlinkSync(path)
+    
+                // return image details
+                console.log(image);
+                //res.json(image)
+                const product = new Product({
+                    _id: mongoose.Types.ObjectId(),
+                    title,
+                    description,
+                    imageUrl: image.url,
+                    price,
+                    category
+                });
+                    
+                    product
+                        .save()
+                        .then(() => {
+                            return res.render("inventory", {msg: "Product saved successfully!"})
+                            // res.status(200).json({
+                            //   message: "Product saved successfully!"
+                            // });
+                        })
+                        .catch(err => {
+                            res.status(400).json({
+                            error: err
+                            });
+                        });
+              })
+        })
+    }
+}
 
 exports.getAllProduct = (req, res, next) => {
   Product.find()
   .select("id title price description imageUrl")
     .then(products => {
-      //const category = req.query.category
+      const category = req.query.category
       
-      // if(category) {
-      //   const filteredProducts = products.filter(product => {
-      //     return product.category === category
-      //   })
-      //   return res.json(filteredProducts)
-      //   //return res.render("gallery", {filteredProducts})
-      // }
+      if(category) {
+        const filteredProducts = products.filter(product => {
+          return product.category === category
+        })
+        return res.json(filteredProducts)
+        //return res.render("gallery", {filteredProducts})
+      }
       res.render("gallery", {products})
       //res.status(200).json(products);
     })
