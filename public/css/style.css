@@ -250,7 +250,8 @@ form .avatar img {
   transition: all 0.25s ease-out;
 }
 .gallery_items img:hover {
-  transform: scale(1.2);
+  /* transform: scale(1.2); */
+  opacity: 0.7;
 }
 
 .gallery_info {
@@ -336,7 +337,7 @@ form .avatar img {
   display: none;
 }
 
-/* Table */
+/* Users Details Table */
 table {
   width: 90%;
   margin: 50px auto;

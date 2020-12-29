@@ -12,7 +12,6 @@ const indexRoutes = require("./routes/index");
 const orderRoutes = require("./routes/order");
 
 const dbConnect = require("./config/dbRemote");
-//const { cloudinaryConfig } = require('./config/cloudinaryConfig')
 
 const app = express();
 
