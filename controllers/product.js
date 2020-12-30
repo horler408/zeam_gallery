@@ -7,7 +7,7 @@ const upload = require('./../middleware/multer');
 
 
 exports.createProduct = (req, res) => {
-  const { title, description, price, category } = req.body
+  const { title, description, price, category, featured } = req.body
     let errors = [];
 
     if (!title || !description || !price || !category) {
@@ -46,7 +46,11 @@ exports.createProduct = (req, res) => {
               path,
               { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` },
               function(err, image) {
-                if (err) return res.send(err)
+                //if (err) return res.send(err)
+                if(err) {
+                  req.flash("error_msg", "Failed to connect, check your network connection!")
+                  return res.redirect("/inventory")
+                }
                 console.log('file uploaded to Cloudinary')
                 // remove file from server
                 //fs.unlinkSync(path)
@@ -60,7 +64,8 @@ exports.createProduct = (req, res) => {
                     description,
                     imageUrl: image.url,
                     price,
-                    category
+                    category,
+                    featured
                 });
                     
                     product
@@ -133,41 +138,60 @@ exports.editForm = (req, res) => {
 }
 exports.modifyProduct = (req, res) => {
   let product = new Product({ _id: req.params.id });
-  if (req.file) {
-    const url = req.protocol + "://" + req.get("host");
-    product = {
-      _id: req.params.id,
-      title: req.body.title,
-      description: req.body.description,
-      imageUrl: "./public/uploads/" + req.file.filename,
-      price: req.body.price,
-      category: req.body.category
-    };
-  } else {
-    product = {
-      _id: req.params.id,
-      title: req.body.title,
-      description: req.body.description,
-      imageUrl: req.body.imageUrl,
-      price: req.body.price,
-      category: req.body.category
-    };
-  }  
-  Product.updateOne({ _id: req.params.id }, product)
-    .then(() => {
-      Product.findOne({_id: req.params.id})
-      .then(product => {
-        res.render("details", {product, msg: "Product Updated Successfully!"})
+  
+    upload(req, res, function(err) {
+      if (err) {
+        return res.send(err)
+      }
+  
+      // SEND FILE TO CLOUDINARY
+      cloudinary.config({
+          cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+          api_key: process.env.CLOUDINARY_API_KEY, 
+          api_secret: process.env.CLOUDINARY_API_SECRET
       })
-      // res.status(200).json({
-      //   message: "Product Updated Successfully!"
-      // });
-    })
-    .catch(error => {
-      res.status(404).json({
-        error: error
-      });
-    });
+      
+      const path = req.file.path
+      const uniqueFilename = new Date().toISOString()
+  
+      cloudinary.uploader.upload(
+        path,
+        { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` },
+        function(err, image) {
+          if (err) return res.send(err)
+          console.log('file uploaded to Cloudinary')
+          // remove file from server
+          //fs.unlinkSync(path)
+
+          // return image details
+          console.log(image);
+          //res.json(image)
+          product = {
+              _id: req.params.id,
+              title,
+              description,
+              imageUrl: image.url,
+              price,
+              category
+          }
+
+        Product.updateOne({ _id: req.params.id }, product)
+          .then(() => {
+            Product.findOne({_id: req.params.id})
+            .then(product => {
+              res.render("details", {product, msg: "Product Updated Successfully!"})
+            })
+            // res.status(200).json({
+            //   message: "Product Updated Successfully!"
+            // });
+          })
+          .catch(error => {
+            res.status(404).json({
+              error: error
+            });
+          });
+        })
+    })      
 };
 
 exports.deleteProduct = (req, res, next) => {

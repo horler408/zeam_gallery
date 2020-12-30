@@ -33,7 +33,7 @@ h1 {
 
 .register_card,
 .login_card,
-.home_card {
+.invent_card {
   min-height: 90vh;
   width: 90%;
   margin: 50px auto;
@@ -58,6 +58,17 @@ h1 {
 /* Styling Form */
 form div {
   margin: 20px;
+}
+
+.featured {
+  display: flex;
+}
+.check-label {
+  display: inline-block !important;
+}
+.check-btn {
+  display: inline-block;
+  width: 5%;
 }
 
 form input {
@@ -130,6 +141,11 @@ form .avatar img {
 }
 .info-login a {
   color: #222;
+}
+
+.upload-file {
+  height: 30px;
+  padding: 5px;
 }
 
 /* Index */
@@ -600,7 +616,7 @@ hr {
 
 @media only screen and (min-width: 567px) {
   .login_container,
-  .home_container,
+  .invent_container,
   .register_container,
   .dashboard_container {
     display: flex;
@@ -610,24 +626,33 @@ hr {
     min-height: 100vh;
   }
 
-  .home_card,
+  .invent_card,
   .update_card,
   .register_card,
   .login_card {
-    height: 90vh;
     margin: 50px auto;
     width: 25rem;
     border-radius: 30px;
-    padding: 0rem 3rem;
+    padding: 1rem 3rem;
     box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
   }
   .login_card {
     height: 50vh;
+    padding: 10px 20px;
   }
-  .home_card,
+
+  .invent_card {
+    width: 60%;
+  }
+  .invent_card form {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* .home_card,
   .update_card {
     padding: 10px;
-  }
+  } */
 
   /* Index */
   .index_container {
@@ -682,6 +707,9 @@ hr {
   .register_card form,
   .home_card form {
     margin-top: 40px;
+  }
+  .upload-file {
+    height: 40px;
   }
 
   /* Details */

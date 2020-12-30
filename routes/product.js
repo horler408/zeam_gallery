@@ -3,7 +3,6 @@ const router = express.Router();
 
 const productCrtl = require("../controllers/product");
 const auth = require("../middleware/auth");
-//const multer = require("../middleware/multer-config");
 const upload = require('./../middleware/multer');
 
 

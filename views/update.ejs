@@ -3,7 +3,65 @@
         <%- include('partials/messages'); -%>
         <div class="alert_success"><%= typeof msg != 'undefined' ? msg : '' %></div>
         <form action="/api/product/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
-            <div class="product_id">
+            <div class="update-left">
+                <div class="product_image">
+                    <label for="image">Image Upload</label>
+                    <input type="file" id="image" class="upload-file" name="imageUrl" required
+                        value="<%= typeof product != 'undefined' ? product.imageUrl : '' %>"
+                    >
+                </div>
+            </div>
+            <div class="update-right">
+                <div class="product_id">
+                    <label for="id">Product Id<span class="red_info"> *</span></label>
+                    <input type="text" id="id" name="id" required disabled
+                        value="<%= typeof product != 'undefined' ? product._id : '' %>"
+                    >
+                </div>
+                <div class="product_name">
+                    <label for="title">Product Name<span class="red_info"> *</span></label>
+                    <input type="text" id="title" name="title" required
+                        value="<%= typeof product != 'undefined' ? product.title : '' %>"
+                    >   
+                </div>
+    
+                <div class="description">
+                    <label for="description">Description<span class="red_info"> *</span></label>
+                    <textarea name="description" id="description" cols="30" rows="5" required
+                        value="<%= typeof product != 'undefined' ? product.description : '' %>"
+                    >
+                    </textarea>
+                </div>
+    
+                <div class="category">
+                    <select name="category" id="category"
+                        value=" typeof product != 'undefined' ? product.category : '' %>"
+                    >
+                        <option value="">Choose category</option>
+                        <option value="fabrics">Fabrics</option>
+                        <option value="clothes">clothes</option>
+                        <option value="bed-sheet">bedsheets</option>
+                        <option value="bags">Bags</option>
+                        <option value="shoes">Shoes</option>
+                        <option value="ornaments">Ornaments</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+                </div>
+                
+                <div class="price_form">
+                    <label for="price">Price<span class="red_info"> *</span></label>
+                    <input type="text" id="price" name="price" required
+                        value="<%= typeof product != 'undefined' ? product.price : '' %>"
+                    >
+                </div>
+                
+                <div class="featured">
+                    <input type="checkbox" name="featured" class="check-btn" id="featured"/>
+                    <label for="featured" class="check-label">Featured?</label>
+                </div>
+                <button class="home-btn" type="submit">Submit</button>
+            </div>            
+            <!-- <div class="product_id">
                 <label for="id">Product Id<span class="red_info"> *</span></label>
                 <input type="text" id="id" name="id" required disabled
                 value="<%= typeof product != 'undefined' ? product._id : '' %>"
@@ -44,13 +102,12 @@
             </div>
             <div class="product_image">
                 <label for="image">Image Upload</label>
-                <input type="text" id="image" name="imageUrl"
+                <input type="file" id="image" class="upload-file" name="imageUrl"
                 value="<%= typeof product != 'undefined' ? product.imageUrl : '' %>"
                 >
             </div>
 
-            <button type="submit" class="update_btn">Submit</button>
-
+            <button type="submit" class="update_btn">Submit</button> -->
         </form>
     </div>
 <%- include('partials/footer'); -%>
