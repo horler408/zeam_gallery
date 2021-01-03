@@ -10,7 +10,7 @@ router.get("/", productCrtl.getAllProduct);
 
 router.post("/", upload, productCrtl.createProduct);
 
-router.get("/:id", auth, productCrtl.getOneProduct);
+router.get("/:id", productCrtl.getOneProduct);
 
 router.post("/edit/:id", upload, productCrtl.modifyProduct);
 router.get("/update/:id", productCrtl.editForm);

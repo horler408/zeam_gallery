@@ -7,11 +7,14 @@
         <div class="detail_content">
             <div class="image">
                 <img src="<%= product.imageUrl %>" alt="Detail Banner">
-                <div class="detail_title"><%= product.title.toUpperCase() %></div>
-                <div class="detail_price">#<%= product.price %></div>
             </div>
             <div class="detail_item">
-                <p><%= product.description %></p>
+                <div class="detail_title"><%= product.title.toUpperCase() %></div>
+                <div class="detail_price">#<%= product.price %></div>
+                <div class="description">
+                    <h3>Description</h3>
+                    <p><%= product.description %></p>
+                </div>
                 <div class="quantity">
                     <label for="">Quantity</label>
                     <input type="number" value="1" name="quantity"/>

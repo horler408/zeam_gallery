@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const cloudinary = require('cloudinary').v2;
+//const cloudinary = require('cloudinary').v2;
 const fs = require("fs");
 
 const Product = require("../models/product");
@@ -7,7 +7,7 @@ const upload = require('./../middleware/multer');
 
 
 exports.createProduct = (req, res) => {
-  const { title, description, price, category, featured } = req.body
+  const { title, description, price, category, imageUrl } = req.body
     let errors = [];
 
     if (!title || !description || !price || !category) {
@@ -23,46 +23,19 @@ exports.createProduct = (req, res) => {
     }
 
     if (errors.length > 0) {
-        return errors;
+        return res.render('inventory', {
+          errors,
+          title,
+          description,
+          price,
+          category
+        })
     }else {
-        upload(req, res, function(err) {
-            if (err) {
-              return res.send(err)
-            }
-            console.log('file uploaded to server')
-            //console.log(req.file)
-        
-            // SEND FILE TO CLOUDINARY
-            cloudinary.config({
-                cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-                api_key: process.env.CLOUDINARY_API_KEY, 
-                api_secret: process.env.CLOUDINARY_API_SECRET
-            })
-            
-            const path = req.file.path
-            const uniqueFilename = new Date().toISOString()
-        
-            cloudinary.uploader.upload(
-              path,
-              { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` },
-              function(err, image) {
-                //if (err) return res.send(err)
-                if(err) {
-                  req.flash("error_msg", "Failed to connect, check your network connection!")
-                  return res.redirect("/inventory")
-                }
-                console.log('file uploaded to Cloudinary')
-                // remove file from server
-                //fs.unlinkSync(path)
-    
-                // return image details
-                console.log(image);
-                //res.json(image)
-                const product = new Product({
+      const product = new Product({
                     _id: mongoose.Types.ObjectId(),
                     title,
                     description,
-                    imageUrl: image.url,
+                    imageUrl,
                     price,
                     category,
                     featured
@@ -81,8 +54,64 @@ exports.createProduct = (req, res) => {
                             error: err
                             });
                         });
-              })
-        })
+        // upload(req, res, function(err) {
+        //     if (err) {
+        //       return res.send(err)
+        //     }
+        //     console.log('file uploaded to server')
+        //     //console.log(req.file)
+        
+        //     // SEND FILE TO CLOUDINARY
+        //     cloudinary.config({
+        //         cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+        //         api_key: process.env.CLOUDINARY_API_KEY, 
+        //         api_secret: process.env.CLOUDINARY_API_SECRET
+        //     })
+            
+        //     const path = req.file.path
+        //     const uniqueFilename = new Date().toISOString()
+        
+        //     cloudinary.uploader.upload(
+        //       path,
+        //       { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` },
+        //       function(err, image) {
+        //         //if (err) return res.send(err)
+        //         if(err) {
+        //           req.flash("error_msg", "Failed to connect, check your network connection!")
+        //           return res.redirect("/inventory")
+        //         }
+        //         console.log('file uploaded to Cloudinary')
+        //         // remove file from server
+        //         //fs.unlinkSync(path)
+    
+        //         // return image details
+        //         console.log(image);
+        //         //res.json(image)
+        //         const product = new Product({
+        //             _id: mongoose.Types.ObjectId(),
+        //             title,
+        //             description,
+        //             imageUrl: image.url,
+        //             price,
+        //             category,
+        //             featured
+        //         });
+                    
+        //             product
+        //                 .save()
+        //                 .then(() => {
+        //                     return res.render("inventory", {msg: "Product saved successfully!"})
+        //                     // res.status(200).json({
+        //                     //   message: "Product saved successfully!"
+        //                     // });
+        //                 })
+        //                 .catch(err => {
+        //                     res.status(400).json({
+        //                     error: err
+        //                     });
+        //                 });
+        //       })
+        // })
     }
 }
 
@@ -99,8 +128,8 @@ exports.getAllProduct = (req, res, next) => {
         return res.json(filteredProducts)
         //return res.render("gallery", {filteredProducts})
       }
-      res.render("gallery", {products})
-      //res.status(200).json(products);
+      //res.render("gallery", {products})
+      res.status(200).json(products);
     })
     .catch(err => {
       res.status(400).json({
@@ -139,34 +168,7 @@ exports.editForm = (req, res) => {
 exports.modifyProduct = (req, res) => {
   let product = new Product({ _id: req.params.id });
   
-    upload(req, res, function(err) {
-      if (err) {
-        return res.send(err)
-      }
-  
-      // SEND FILE TO CLOUDINARY
-      cloudinary.config({
-          cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-          api_key: process.env.CLOUDINARY_API_KEY, 
-          api_secret: process.env.CLOUDINARY_API_SECRET
-      })
-      
-      const path = req.file.path
-      const uniqueFilename = new Date().toISOString()
-  
-      cloudinary.uploader.upload(
-        path,
-        { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` },
-        function(err, image) {
-          if (err) return res.send(err)
-          console.log('file uploaded to Cloudinary')
-          // remove file from server
-          //fs.unlinkSync(path)
-
-          // return image details
-          console.log(image);
-          //res.json(image)
-          product = {
+  product = {
               _id: req.params.id,
               title,
               description,
@@ -190,8 +192,61 @@ exports.modifyProduct = (req, res) => {
               error: error
             });
           });
-        })
-    })      
+        
+
+    // upload(req, res, function(err) {
+    //   if (err) {
+    //     return res.send(err)
+    //   }
+  
+    //   // SEND FILE TO CLOUDINARY
+    //   cloudinary.config({
+    //       cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    //       api_key: process.env.CLOUDINARY_API_KEY, 
+    //       api_secret: process.env.CLOUDINARY_API_SECRET
+    //   })
+      
+    //   const path = req.file.path
+    //   const uniqueFilename = new Date().toISOString()
+  
+    //   cloudinary.uploader.upload(
+    //     path,
+    //     { public_id: `ecommerce/${uniqueFilename}`, tags: `zeeam` },
+    //     function(err, image) {
+    //       if (err) return res.send(err)
+    //       console.log('file uploaded to Cloudinary')
+    //       // remove file from server
+    //       //fs.unlinkSync(path)
+
+    //       // return image details
+    //       console.log(image);
+    //       //res.json(image)
+    //       product = {
+    //           _id: req.params.id,
+    //           title,
+    //           description,
+    //           imageUrl: image.url,
+    //           price,
+    //           category
+    //       }
+
+    //     Product.updateOne({ _id: req.params.id }, product)
+    //       .then(() => {
+    //         Product.findOne({_id: req.params.id})
+    //         .then(product => {
+    //           res.render("details", {product, msg: "Product Updated Successfully!"})
+    //         })
+    //         // res.status(200).json({
+    //         //   message: "Product Updated Successfully!"
+    //         // });
+    //       })
+    //       .catch(error => {
+    //         res.status(404).json({
+    //           error: error
+    //         });
+    //       });
+    //     })
+    // })      
 };
 
 exports.deleteProduct = (req, res, next) => {

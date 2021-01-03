@@ -106,8 +106,8 @@ label {
 .home-btn {
   border-radius: 20px;
   border: 1px solid #ff4b2b;
-  background-color: #ff4b2b;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #ff4b2b;
   font-size: 12px;
   font-weight: bold;
   margin-left: 20px;
@@ -117,6 +117,11 @@ label {
   pointer-events: all;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+}
+
+.order_btn:hover {
+  background-color: #ff4b2b;
+  color: #ffffff;
 }
 
 button:active {
@@ -226,20 +231,16 @@ form .avatar img {
   min-height: 30vh;
 }
 
-.title,
-.detail_title {
+.title {
   position: absolute;
-  top: 65%;
+  top: 70%;
   left: 0;
   background: #ff4b2b;
   color: #ffffff;
   padding: 5px 10px;
 }
-.title {
-  top: 70%;
-}
-.price,
-.detail_price {
+
+.price {
   position: absolute;
   top: 10px;
   left: 0;
@@ -305,8 +306,18 @@ form .avatar img {
   height: 300px;
 }
 
-.detail_title {
-  top: 28%;
+.detail_title,
+.detail_price {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.detail_title:hover,
+.detail_price:hover {
+  background-color: #333;
+  color: #fff;
 }
 
 .detail_item button {
@@ -325,7 +336,7 @@ form .avatar img {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 98%;
+  top: 158%;
 }
 
 .quantity {
@@ -649,11 +660,6 @@ hr {
     justify-content: center;
   }
 
-  /* .home_card,
-  .update_card {
-    padding: 10px;
-  } */
-
   /* Index */
   .index_container {
     background: url("/assets/photo_shop.svg") center/cover no-repeat;
@@ -742,14 +748,10 @@ hr {
   }
 
   .order_btn {
-    top: 113%;
+    top: 109%;
   }
   .detail_item p {
-    margin-top: 30px;
     min-height: 20vh;
-  }
-  .detail_title {
-    top: 92%;
   }
 
   /* Header */
