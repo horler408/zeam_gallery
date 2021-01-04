@@ -65,15 +65,16 @@ exports.createProduct = (req, res) => {
                 console.log(image);
                 //res.json(image)
                 const product = new Product({
-                    _id: mongoose.Types.ObjectId(),
-                    title,
-                    description,
-                    imageUrl: image.url,
-                    price,
-                    category,
-                    featured
+                  _id: mongoose.Types.ObjectId(),
+                  title,
+                  description,
+                  imageUrl: image.url,
+                  price,
+                  category
                 });
-                    
+                  if(featured === 'checked') {
+                    product.featured = true
+                  }
                     product
                         .save()
                         .then(() => {
